@@ -3,15 +3,6 @@ name: Continuous Integration
 on:
   pull_request:
     branches: [ main, master ]
-  push:
-    tags:
-      - 'v*'
-    paths-ignore:
-      - 'README.md'
-      - 'docs/**'
-      - '.gitignore'
-      - 'LICENSE'
-      - '.github/**'
 
 jobs:
   test:

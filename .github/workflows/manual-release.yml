@@ -13,19 +13,7 @@ on:
           - minor
           - major
           - prerelease
-  push:
-    tags:
-      - 'v*'
-      custom_version:
-        description: 'Custom version (optional, overrides version_type)'
-        required: false
-        type: string
-      skip_tests:
-        description: 'Skip tests'
-        required: false
-        default: false
-        type: boolean
-
+          
 jobs:
   manual-release:
     runs-on: ubuntu-latest
