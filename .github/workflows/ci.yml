@@ -18,7 +18,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [16, 18, 20]
+        node-version: [18, 20, 22, 24]
     
     steps:
       - name: Checkout code
@@ -28,7 +28,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -59,8 +58,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: '24'
 
       - name: Install dependencies
         run: npm ci
