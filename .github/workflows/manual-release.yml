@@ -13,6 +13,9 @@ on:
           - minor
           - major
           - prerelease
+  push:
+    tags:
+      - 'v*'
       custom_version:
         description: 'Custom version (optional, overrides version_type)'
         required: false

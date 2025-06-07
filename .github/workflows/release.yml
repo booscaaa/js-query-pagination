@@ -2,9 +2,8 @@ name: Release and Publish
 
 on:
   push:
-    branches:
-      - main
-      - master
+    tags:
+      - 'v*'
     paths-ignore:
       - 'README.md'
       - 'docs/**'
@@ -53,15 +52,6 @@ jobs:
             echo "New version detected: $CURRENT_VERSION"
             echo "should_release=true" >> $GITHUB_OUTPUT
           fi
-
-      - name: Create Git tag
-        if: steps.version_check.outputs.should_release == 'true'
-        run: |
-          VERSION=${{ steps.current_version.outputs.version }}
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          git tag -a "v${VERSION}" -m "Release version ${VERSION}"
-          git push origin "v${VERSION}"
 
       - name: Create GitHub Release
         if: steps.version_check.outputs.should_release == 'true'
