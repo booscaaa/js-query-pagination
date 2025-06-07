@@ -1,0 +1,61 @@
+{
+  "name": "js-pagination",
+  "version": "1.0.2",
+  "description": "Advanced JavaScript pagination library for generating query string parameters compatible with axios and fetch",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "release": "node scripts/release.js",
+    "release:patch": "node scripts/release.js patch",
+    "release:minor": "node scripts/release.js minor",
+    "release:major": "node scripts/release.js major",
+    "release:prerelease": "node scripts/release.js prerelease"
+  },
+  "keywords": [
+    "pagination",
+    "query",
+    "parameters",
+    "axios",
+    "fetch",
+    "filtering",
+    "sorting",
+    "javascript",
+    "typescript"
+  ],
+  "author": "booscaaa",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
+    "jest": "^29.7.0",
+    "rollup": "^3.29.4",
+    "rollup-plugin-typescript2": "^0.35.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/booscaaa/js-pagination.git"
+  },
+  "bugs": {
+    "url": "https://github.com/booscaaa/js-pagination/issues"
+  },
+  "homepage": "https://github.com/booscaaa/js-pagination#readme"
+}

@@ -1,0 +1,126 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - prerelease
+      custom_version:
+        description: 'Custom version (optional, overrides version_type)'
+        required: false
+        type: string
+      skip_tests:
+        description: 'Skip tests'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  manual-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        if: ${{ !inputs.skip_tests }}
+        run: npm test
+
+      - name: Build project
+        run: npm run build
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version (custom)
+        if: ${{ inputs.custom_version != '' }}
+        run: |
+          npm version ${{ inputs.custom_version }} --no-git-tag-version
+          echo "NEW_VERSION=${{ inputs.custom_version }}" >> $GITHUB_ENV
+
+      - name: Bump version (automatic)
+        if: ${{ inputs.custom_version == '' }}
+        run: |
+          NEW_VERSION=$(npm version ${{ inputs.version_type }} --no-git-tag-version)
+          echo "NEW_VERSION=${NEW_VERSION#v}" >> $GITHUB_ENV
+
+      - name: Commit version bump
+        run: |
+          git add package.json package-lock.json
+          git commit -m "chore: bump version to ${{ env.NEW_VERSION }} [skip ci]"
+          git push origin ${{ github.ref_name }}
+
+      - name: Create Git tag
+        run: |
+          git tag -a "v${{ env.NEW_VERSION }}" -m "Release version ${{ env.NEW_VERSION }}"
+          git push origin "v${{ env.NEW_VERSION }}"
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.NEW_VERSION }}
+          release_name: Release v${{ env.NEW_VERSION }}
+          body: |
+            ## Manual Release v${{ env.NEW_VERSION }}
+            
+            This release was created manually using GitHub Actions workflow.
+            
+            ### Version Type
+            - **Type**: ${{ inputs.version_type }}
+            - **Custom Version**: ${{ inputs.custom_version || 'N/A' }}
+            
+            ### Installation
+            ```bash
+            npm install js-pagination@${{ env.NEW_VERSION }}
+            ```
+            
+            ### Documentation
+            See [README.md](https://github.com/${{ github.repository }}/blob/main/README.md) for usage instructions.
+          draft: false
+          prerelease: ${{ contains(env.NEW_VERSION, 'alpha') || contains(env.NEW_VERSION, 'beta') || contains(env.NEW_VERSION, 'rc') }}
+
+      - name: Publish to NPM
+        run: |
+          if [[ "${{ env.NEW_VERSION }}" == *"alpha"* ]] || [[ "${{ env.NEW_VERSION }}" == *"beta"* ]] || [[ "${{ env.NEW_VERSION }}" == *"rc"* ]]; then
+            npm publish --tag next
+            echo "📦 Published to NPM with 'next' tag"
+          else
+            npm publish
+            echo "📦 Published to NPM with 'latest' tag"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Success notification
+        run: |
+          echo "✅ Manual release completed successfully!"
+          echo "🔖 Version: ${{ env.NEW_VERSION }}"
+          echo "📦 Published to NPM"
+          echo "🏷️ Git tag created: v${{ env.NEW_VERSION }}"
+          echo "📋 GitHub release created"
