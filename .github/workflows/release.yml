@@ -41,50 +41,13 @@ jobs:
         id: current_version
         run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
-      - name: Check if version changed
-        id: version_check
-        run: |
-          CURRENT_VERSION=${{ steps.current_version.outputs.version }}
-          if git tag | grep -q "^v${CURRENT_VERSION}$"; then
-            echo "Version $CURRENT_VERSION already exists as a tag"
-            echo "should_release=false" >> $GITHUB_OUTPUT
-          else
-            echo "New version detected: $CURRENT_VERSION"
-            echo "should_release=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Create GitHub Release
-        if: steps.version_check.outputs.should_release == 'true'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.current_version.outputs.version }}
-          release_name: Release v${{ steps.current_version.outputs.version }}
-          body: |
-            ## Changes in v${{ steps.current_version.outputs.version }}
-            
-            ### Features
-            - Check the commit history for detailed changes
-            
-            ### Installation
-            ```bash
-            npm install js-pagination@${{ steps.current_version.outputs.version }}
-            ```
-            
-            ### Documentation
-            See [README.md](https://github.com/${{ github.repository }}/blob/main/README.md) for usage instructions.
-          draft: false
-          prerelease: false
-
+  
       - name: Publish to NPM
-        if: steps.version_check.outputs.should_release == 'true'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Notify success
-        if: steps.version_check.outputs.should_release == 'true'
         run: |
           echo "✅ Successfully released version ${{ steps.current_version.outputs.version }}"
           echo "📦 Package published to NPM"
