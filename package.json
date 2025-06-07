@@ -1,6 +1,6 @@
 {
   "name": "js-pagination",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Advanced JavaScript pagination library for generating query string parameters compatible with axios and fetch",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
