@@ -82,7 +82,7 @@ Certifique-se de que seu `package.json` está configurado corretamente:
 
 ```json
 {
-  "name": "js-pagination",
+  "name": "js-query-pagination",
   "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -98,7 +98,7 @@ Certifique-se de que seu `package.json` está configurado corretamente:
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/seu-usuario/js-pagination.git"
+    "url": "git+https://github.com/seu-usuario/js-query-pagination.git"
   },
   "publishConfig": {
     "access": "public"

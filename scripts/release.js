@@ -153,7 +153,7 @@ function main() {
   log('\n' + colors.green + '🎉 Release preparado com sucesso!' + colors.reset);
   log('📦 Nova versão: ' + newVersion, 'green');
   log('🤖 O workflow do GitHub Actions será executado automaticamente.', 'cyan');
-  log('📋 Acompanhe o progresso em: https://github.com/booscaaa/js-pagination/actions', 'cyan');
+  log('📋 Acompanhe o progresso em: https://github.com/booscaaa/js-query-pagination/actions', 'cyan');
 }
 
 if (require.main === module) {

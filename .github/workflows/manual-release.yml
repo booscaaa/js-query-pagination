@@ -13,7 +13,7 @@ on:
           - minor
           - major
           - prerelease
-          
+
 jobs:
   manual-release:
     runs-on: ubuntu-latest
@@ -87,7 +87,7 @@ jobs:
             
             ### Installation
             ```bash
-            npm install js-pagination@${{ env.NEW_VERSION }}
+            npm install js-query-pagination@${{ env.NEW_VERSION }}
             ```
             
             ### Documentation

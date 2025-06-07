@@ -1,5 +1,5 @@
 {
-  "name": "js-pagination",
+  "name": "js-query-pagination",
   "version": "1.0.4",
   "description": "Advanced JavaScript pagination library for generating query string parameters compatible with axios and fetch",
   "main": "dist/index.js",
@@ -52,10 +52,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/booscaaa/js-pagination.git"
+    "url": "git+https://github.com/booscaaa/js-query-pagination.git"
   },
   "bugs": {
-    "url": "https://github.com/booscaaa/js-pagination/issues"
+    "url": "https://github.com/booscaaa/js-query-pagination/issues"
   },
-  "homepage": "https://github.com/booscaaa/js-pagination#readme"
+  "homepage": "https://github.com/booscaaa/js-query-pagination#readme"
 }

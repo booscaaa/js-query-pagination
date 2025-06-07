@@ -19,11 +19,11 @@ Inspired by the powerful [Go Paginate](https://github.com/booscaaa/go-paginate) 
 ## 📦 Installation
 
 ```bash
-npm install js-pagination
+npm install js-query-pagination
 # or
-yarn add js-pagination
+yarn add js-query-pagination
 # or
-pnpm add js-pagination
+pnpm add js-query-pagination
 ```
 
 ## 🚀 Quick Start
@@ -31,7 +31,7 @@ pnpm add js-pagination
 ### Basic Usage
 
 ```typescript
-import { createPaginate } from 'js-pagination';
+import { createPaginate } from 'js-query-pagination';
 
 // Create a paginate builder
 const paginate = createPaginate()
@@ -53,7 +53,7 @@ const url = paginate.buildUrl('https://api.example.com/users');
 
 ```typescript
 import axios from 'axios';
-import { createPaginate } from 'js-pagination';
+import { createPaginate } from 'js-query-pagination';
 
 const paginate = createPaginate()
   .page(1)
@@ -79,7 +79,7 @@ const response2 = await axios.get('https://api.example.com/users', {
 ### With Fetch
 
 ```typescript
-import { createPaginate } from 'js-pagination';
+import { createPaginate } from 'js-query-pagination';
 
 const paginate = createPaginate()
   .page(1)
@@ -153,7 +153,7 @@ const paginate = createPaginate()
 ## 🔧 Configuration Options
 
 ```typescript
-import { createPaginate } from 'js-pagination';
+import { createPaginate } from 'js-query-pagination';
 
 const paginate = createPaginate({
   encodeValues: true,              // URL encode values (default: true)
@@ -186,7 +186,7 @@ const comma = createPaginate({ arrayFormat: 'comma' })
 ### Quick Functions
 
 ```typescript
-import { toQueryString, toUrl, toAxiosConfig, toFetchConfig } from 'js-pagination';
+import { toQueryString, toUrl, toAxiosConfig, toFetchConfig } from 'js-query-pagination';
 
 const params = {
   page: 1,
@@ -211,7 +211,7 @@ const { url: fetchUrl, config } = toFetchConfig('https://api.example.com/users',
 ### Parsing Functions
 
 ```typescript
-import { fromJSON, fromObject, fromQueryString } from 'js-pagination';
+import { fromJSON, fromObject, fromQueryString } from 'js-query-pagination';
 
 // From JSON string
 const paramsFromJSON = fromJSON('{"page":1,"limit":10}');
@@ -228,7 +228,7 @@ const paramsFromQuery = fromQueryString('page=1&limit=10&sort[]=name');
 ### Complex User Search
 
 ```typescript
-import { createPaginate } from 'js-pagination';
+import { createPaginate } from 'js-query-pagination';
 import axios from 'axios';
 
 // Complex user search with multiple filters
@@ -258,7 +258,7 @@ const searchUsers = async () => {
 ### Dynamic Filtering from Form
 
 ```typescript
-import { createPaginate } from 'js-pagination';
+import { createPaginate } from 'js-query-pagination';
 
 interface SearchForm {
   search?: string;
@@ -321,7 +321,7 @@ const url = query.buildUrl('https://api.example.com/users');
 
 ```typescript
 import { useState, useEffect } from 'react';
-import { createPaginate, PaginateParams } from 'js-pagination';
+import { createPaginate, PaginateParams } from 'js-query-pagination';
 
 interface UsePaginationOptions {
   baseUrl: string;
