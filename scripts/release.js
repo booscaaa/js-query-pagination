@@ -84,7 +84,7 @@ function bumpVersion(type) {
 
 function commitAndPush(version) {
   log('📝 Commitando mudanças...', 'yellow');
-  exec('git add package.json package-lock.json');
+  exec('git add package.json');
   exec('git commit -m "chore: bump version to ' + version + '"');
   
   log('🚀 Fazendo push...', 'yellow');
