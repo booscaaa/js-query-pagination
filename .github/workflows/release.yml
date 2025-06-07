@@ -58,8 +58,6 @@ jobs:
         if: steps.version_check.outputs.should_release == 'true'
         run: |
           VERSION=${{ steps.current_version.outputs.version }}
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag -a "v${VERSION}" -m "Release version ${VERSION}"
           git push origin "v${VERSION}"
 
