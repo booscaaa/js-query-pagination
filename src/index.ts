@@ -204,11 +204,12 @@ export function fromQueryString(queryString: string): PaginateParams {
         (params as any)[key] = parseInt(value, 10);
       } else if (key === 'vacuum') {
         (params as any)[key] = value === 'true';
-      } else if (key === 'sort' || key === 'searchFields') {
-        if (!(params as any)[key]) {
-          (params as any)[key] = [];
+      } else if (key === 'sort' || key === 'searchFields' || key === 'search_fields') {
+        const paramKey = key === 'search_fields' ? 'searchFields' : key;
+        if (!(params as any)[paramKey]) {
+          (params as any)[paramKey] = [];
         }
-        (params as any)[key].push(value);
+        (params as any)[paramKey].push(value);
       } else {
         (params as any)[key] = value;
       }

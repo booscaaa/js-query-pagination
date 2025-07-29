@@ -139,7 +139,7 @@ describe('PaginateBuilder', () => {
         .search('john', 'name')
         .buildUrl();
       
-      expect(url).toBe('https://api.example.com/users?page=2&limit=25&search=john&searchFields=name');
+      expect(url).toBe('https://api.example.com/users?page=2&limit=25&search=john&search_fields=name');
     });
 
     test('should handle URL with existing query parameters', () => {

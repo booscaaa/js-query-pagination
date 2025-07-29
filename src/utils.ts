@@ -70,6 +70,17 @@ export function formatArrayValue(
 }
 
 /**
+ * Convert camelCase to snake_case
+ */
+function camelToSnakeCase(str: string): string {
+  // Convert searchFields to search_fields
+  if (str === 'searchFields') {
+    return 'search_fields';
+  }
+  return str;
+}
+
+/**
  * Convert an object to query string parameters
  */
 export function objectToQueryParams(
@@ -83,15 +94,17 @@ export function objectToQueryParams(
       continue;
     }
     
+    const queryKey = camelToSnakeCase(key);
+    
     if (Array.isArray(value)) {
       if (value.length > 0) {
-        params.push(...formatArrayValue(key, value, options));
+        params.push(...formatArrayValue(queryKey, value, options));
       }
     } else if (typeof value === 'object' && value !== null) {
       // Handle nested objects by flattening them
       for (const [nestedKey, nestedValue] of Object.entries(value)) {
         if (!shouldSkipValue(nestedValue, options)) {
-          const flatKey = `${key}[${nestedKey}]`;
+          const flatKey = `${queryKey}[${nestedKey}]`;
           if (Array.isArray(nestedValue)) {
             params.push(...formatArrayValue(flatKey, nestedValue, options));
           } else {
@@ -100,7 +113,7 @@ export function objectToQueryParams(
         }
       }
     } else {
-      params.push(`${encodeValue(key, options.encodeValues)}=${encodeValue(value, options.encodeValues)}`);
+      params.push(`${encodeValue(queryKey, options.encodeValues)}=${encodeValue(value, options.encodeValues)}`);
     }
   }
   
